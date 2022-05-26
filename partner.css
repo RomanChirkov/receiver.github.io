@@ -1,0 +1,1104 @@
+/*
+ * Copyright 2014 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+**/
+
+/* NOTE: this must be first statement in file to work on device */
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400);
+
+/* ------------------------------------------------- */
+/* Animations                                        */
+/* ------------------------------------------------- */
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@-webkit-keyframes loading {
+  0% { margin-left: -100%; }
+  100% { margin-left: 100%; }
+}
+
+/* ------------------------------------------------- */
+/* Player                                            */
+/* ------------------------------------------------- */
+
+body {
+  background-color: #AA232A;
+  margin: 0;
+}
+
+#version {
+    position: absolute;
+    font-size: 30px;
+    right: 50px;
+    top: 30px;
+}
+
+.player {
+  background: linear-gradient(to bottom, rgba(0,0,0,0.85) 1%,rgba(0,0,0,.80) 50%,rgba(0,0,0,0.70) 100%);
+  background-color: #5b5b5b;
+  background-size: cover;
+  color: #f1f1f1;
+  font-family: 'Open Sans',sans-serif;
+  font-weight: 300;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.player .intro {
+    background: #AA232A;
+    display: none;
+    position: absolute;
+    height: 100%;
+    /*width: 50%;*/
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+
+@-webkit-keyframes anv-cv {
+    from {-webkit-transform: rotate(0deg);}
+    to   {-webkit-transform: rotate(359deg);}
+}
+@keyframes anv-cv {
+    from {transform: rotate(0deg);}
+    to   {transform: rotate(359deg);}
+}
+@keyframes anv-ccv {
+    to {transform: rotate(0deg);}
+    from   {transform: rotate(359deg);}
+}
+@-webkit-keyframes anv-ccv {
+    to {-webkit-transform: rotate(0deg);}
+    from   {-webkit-transform: rotate(359deg);}
+}
+
+
+.player .spinning-wheel{
+    display: none;
+    -webkit-transition: opacity 300ms ease-in-out;
+    transition: opacity 300ms ease-in-out;
+    opacity: 1;
+    z-index: 15;
+}
+.spinning-wheel {
+    width: 68px;
+    height: 68px;
+    display: block;
+    opacity: 0;
+    z-index: 0;
+    position: absolute;
+    bottom: 15%;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+.inner {
+    background: url("assets/innerspinner.png") no-repeat;
+    -webkit-animation: anv-ccv 1.6s infinite linear;
+    animation: anv-ccv 1.6s infinite linear;
+}
+.outer {
+    background: url("assets/outerspinner.png") no-repeat;
+    -webkit-animation: anv-cv 1.6s infinite linear;
+    animation: anv-cv 1.6s infinite linear;
+}
+.spinner-part {
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    width: 30px;
+    height: 30px;
+}
+
+.player .logo-wrapper {
+  position: absolute;
+  height: 50%;
+  width: 65%;
+  margin: auto;
+  top: 20%;
+  left: 0;
+  right: 0;
+  padding: 0;
+}
+
+
+.player .logo {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top:0;
+    background:#AA232A;
+    display: none;
+    margin: auto;
+}
+
+
+.intro-text {
+    display: none;
+    font-size: 40px;
+    text-align: center;
+    /*display: inline-block;*/
+    position: absolute;
+    line-height: 60px;
+    bottom: 15%;
+    width: 100%;
+
+}
+.verification-text::before {
+   content: "";
+ }
+.verification-text {
+    display: none;
+    font-size: 40px;
+    text-align: center;
+    position: absolute;
+    line-height: 60px;
+    bottom: 25%;
+    width: 100%;
+}
+
+
+
+.player .placeholder-image {
+  background-image: url("assets/placeholder-audio.jpg");
+}
+
+.player .gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+
+.player video {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.player .media-info {
+  width: 100%;
+  position: absolute;
+  bottom: 30px;
+  min-height: 145px;
+  padding-bottom: 10px;
+  display: block;
+}
+
+.player .media-artwork-wrapper {
+  display: block;
+  float: left;
+  margin-right: 2%;
+  margin-top: 2%;
+  max-height: 145px;
+  min-width: 145px;
+  max-width: 18%;
+}
+
+.player .media-artwork{
+    max-height: 145px;
+    max-width: 100%;
+}
+
+.player .media-text {
+    /*max-width: 58%;*/
+}
+
+.player .media-info .media-title {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 44px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 80%;
+}
+
+.player .media-info .media-subtitle {
+  color: rgba(203, 203, 203, 0.8);
+  font-size: 22px;
+  overflow: hidden;
+  width: 80%;
+  text-align: justify;
+}
+
+.player .media-info .media-subtitle span:not(:first-child):before {
+  content: '\00B7';
+  padding-left: 10px;
+  padding-right: 10px;
+  font-weight: bold;
+}
+
+.player .controls {
+  display: none;
+  bottom: 0;
+  height: 30px;
+  left: 0;
+  position: absolute;
+  right: 0;
+}
+
+.player .controls-play-pause {
+  background-size: cover;
+  border: 0;
+  float: left;
+  height: 36px;
+  margin-left: -4px;
+  margin-top: -3px;
+  width: 32px;
+}
+
+.player .overlay {
+  position: absolute;
+  left: 64px;
+  bottom: 64px;
+  right: 64px;
+  display: none;
+  top: auto;
+}
+
+.player .watermark {
+  position: absolute;
+  top: 64px;
+  left: 64px;
+  bottom: 64px;
+  right: 64px;
+  display: none;
+  background-position: bottom right;
+  background-repeat: no-repeat;
+  margin-bottom: 54px;
+  background-image: url("assets/watermark.png");
+}
+
+.player .gradient {
+  display: none;
+  opacity: 0.9;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0.0) 72%,
+    rgba(0, 0, 0, 0.0) 100%
+  );
+}
+
+.player .progressBar {
+  background-color: #EE3F26;
+}
+
+.player .controls-progress {
+  background-color: rgba(255, 255, 255, 0.2);
+  height: 8px;
+  margin-top: 11px;
+  margin-bottom: 11px;
+  overflow: hidden;
+  position: relative;
+}
+
+.player .controls-progress-inner {
+  height: 100%;
+  opacity: 0.8;
+}
+
+.player .controls-progress-thumb {
+  height: 100%;
+  width: 3px;
+  background-color: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  top: 0;
+  margin-left: -3px;
+}
+
+.player[mode="ad"] .controls-ad-break {
+    display: none;
+}
+.player[mode="content"] .controls-ad-break {
+    display: block;
+    height: 100%;
+    width: 3px;
+    background-color: rgba(255, 255, 255, 0.9);
+    position: absolute;
+    top: 0;
+    margin-left: -3px;
+}
+
+.player[mode="ad"] .ad-remaining {
+    display: block;
+    position: absolute;
+    margin: 64px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 20px;
+    font-weight: 400;
+}
+.player .ad-remaining {
+    display: none;
+}
+
+
+.player .controls-cur-time,
+.player .controls-total-time {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.player .controls-cur-time {
+  float: left;
+  line-height: 30px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.player .controls-total-time {
+  float: right;
+  line-height: 30px;
+  margin-left: 15px;
+}
+
+/* ------------------------------------------------- */
+/* Player - Video                                    */
+/* ------------------------------------------------- */
+
+/* ------------------------------------------------- */
+/* Player - Video - Launching                        */
+/* ------------------------------------------------- */
+
+.player[state="launching"] .intro,
+.player[state="launching"] .logo,
+.player[state="launching"] .spinning-wheel {
+    display: block;
+}
+
+.player[type="video"][state="launching"] .overlay {
+  display: block;
+}
+
+.player[type="video"][state="launching"] .logo {
+  display: block;
+}
+
+.player[type="video"][state="launching"] .controls,
+.player[type="video"][state="launching"] .media-info,
+.player[type="video"][state="launching"] .media-artwork-wrapper {
+  display: none;
+}
+
+/*.player[type="video"][state="launching"] .spinner {*/
+  /*-webkit-animation: spin 1s infinite linear;*/
+  /*height: 36px;*/
+  /*width: 32px;*/
+  /*display: block;*/
+  /*position: absolute;*/
+  /*background-image: url("assets/buffering.png");*/
+  /*bottom: 64px;*/
+  /*left: 50%;*/
+  /*margin-left: 32px / -2;*/
+/*}*/
+
+/* ------------------------------------------------- */
+/* Player - Video - Loading                          */
+/* ------------------------------------------------- */
+
+.player[type="video"][state="loading"] .overlay,
+.player[type="video"][state="loading"] .controls,
+.player[type="video"][state="loading"] .watermark {
+  display: block;
+}
+
+.player[type="video"][state="loading"] .controls-cur-time,
+.player[type="video"][state="loading"] .controls-total-time,
+.player[type="video"][state="loading"] .controls-progress-thumb,
+.player[type="video"][state="loading"] .controls-play-pause {
+  display: none;
+}
+
+.player[type="video"][state="loading"] .controls-progress-inner {
+  width: 90% !important;
+  -webkit-animation: loading 2s infinite linear;
+}
+
+/* ------------------------------------------------- */
+/* Player - Video - Buffering                        */
+/* ------------------------------------------------- */
+
+.player[type="video"][state="buffering"] .overlay,
+.player[type="video"][state="buffering"] .gradient {
+  display: block;
+  visibility: visible;
+}
+
+.player[type="video"][state="buffering"] .gradient {
+  opacity: 0.1;
+}
+
+.player[type="video"][state="buffering"] .media-artwork-wrapper,
+.player[type="video"][state="buffering"] .media-info {
+  display: none;
+}
+
+.player[type="video"][state="buffering"] .controls {
+  display: block;
+}
+
+.player[type="video"][state="buffering"] .controls-play-pause {
+  background-image: url("assets/buffering.png");
+  -webkit-animation: spin 1s infinite linear;
+}
+
+.player[type="video"][state="buffering"][live="true"] .controls-cur-time,
+.player[type="video"][state="buffering"][live="true"] .controls-total-time,
+.player[type="video"][state="buffering"][live="true"] .controls-progress {
+  display: none !important;
+}
+
+.player[type="video"][state="buffering"] video {
+  display: block;
+}
+
+.player[type="video"][state="buffering"] .media-info,
+.player[type="video"][state="buffering"]:not(.seeking) .controls-cur-time,
+.player[type="video"][state="buffering"]:not(.seeking) .controls-total-time,
+.player[type="video"][state="buffering"]:not(.seeking) .controls-progress {
+  display: none;
+}
+
+/* ------------------------------------------------- */
+/* Player - Video - Paused                           */
+/* ------------------------------------------------- */
+
+.player[type="video"][state="paused"] .overlay,
+.player[type="video"][state="paused"] .gradient,
+.player[type="video"][state="paused"] .watermark {
+  display: block;
+  visibility: visible;
+}
+
+.player[type="video"][state="paused"] .controls-play-pause {
+  background-image: url("assets/paused.png");
+}
+
+.player[type="video"][state="paused"] .controls,
+.player[type="video"][state="paused"] .watermark,
+.player[type="video"][state="paused"]:not(.seeking) .controls-cur-time,
+.player[type="video"][state="paused"]:not(.seeking) .controls-total-time,
+.player[type="video"][state="paused"]:not(.seeking) .controls-progress {
+  display: block;
+}
+
+.player[type="video"][state="paused"][live="true"] .controls-cur-time,
+.player[type="video"][state="paused"][live="true"] .controls-total-time,
+.player[type="video"][state="paused"][live="true"] .controls-progress {
+  display: none !important;
+}
+
+.player[type="video"][state="paused"] video {
+  display: block;
+}
+
+.player[type="video"][state="paused"]:not(.seeking) .controls-cur-time,
+.player[type="video"][state="paused"]:not(.seeking) .controls-total-time,
+.player[type="video"][state="paused"]:not(.seeking) .controls-progress {
+  opacity: 1;
+  -webkit-transition: opacity 1s linear 5s;
+}
+
+.player[type="video"][state="paused"] .media-info {
+  opacity: 0;
+  -webkit-transition: opacity 1s linear 5s;
+}
+
+.player[type="video"][state="paused"] .gradient {
+  opacity: 0.1;
+  -webkit-transition: opacity 1s linear 5s;
+}
+
+/* ------------------------------------------------- */
+/* Player - Video - Playing                          */
+/* ------------------------------------------------- */
+
+.player[type="video"][state="playing"] .overlay,
+.player[type="video"][state="playing"] .gradient,
+.player[type="video"][state="playing"] .watermark {
+  display: block;
+  visibility: hidden;
+}
+
+.player[type="video"][state="playing"].seeking .overlay,
+.player[type="video"][state="playing"].seeking .gradient {
+  display: block;
+  visibility: visible;
+}
+
+.player[type="video"][state="playing"].seeking .media-info {
+  display: none;
+}
+
+.player[type="video"][state="playing"].seeking .controls {
+  display: block;
+}
+
+.player[type="video"][state="playing"] .controls-play-pause {
+  background-image: url("assets/buffering.png");
+  -webkit-animation: spin 1s infinite linear;
+}
+
+.player[type="video"][state="playing"]:not(.seeking) .controls-play-pause {
+  display: none;
+}
+
+.player[type="video"][state="playing"]:not(.seeking) .controls-cur-time {
+  margin-left: 0;
+}
+
+.player[type="video"][state="playing"][live="true"] .controls-cur-time,
+.player[type="video"][state="playing"][live="true"] .controls-total-time,
+.player[type="video"][state="playing"][live="true"] .controls-progress {
+  display: none !important;
+}
+
+.player[type="video"][state="playing"] video {
+  display: block;
+}
+
+/* ------------------------------------------------- */
+/* Player - Audio                                    */
+/* ------------------------------------------------- */
+
+.player[type="audio"] .media-title {
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.player[type="audio"] .media-artwork-wrapper {
+  height: 384px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.3);
+  width: 384px;
+  max-width: 384px;
+  background-image: url("assets/placeholder-audio.jpg");
+}
+
+.player[type="audio"] .media-text {
+  margin-top: 15px;
+}
+
+.player[type="audio"][live="true"] .media-text {
+  margin-top: 15px !important;
+}
+
+.player[type="audio"] .placeholder-image {
+  display: block;
+}
+
+/* ------------------------------------------------- */
+/* Player - Audio - Launching                        */
+/* ------------------------------------------------- */
+
+.player[type="audio"][state="launching"] .logo {
+  display: block;
+}
+
+/* ------------------------------------------------- */
+/* Player - Audio - Loading/Paused                   */
+/* ------------------------------------------------- */
+
+.player[type="audio"][state="loading"] .overlay,
+.player[type="audio"][state="paused"] .overlay {
+  display: block;
+  margin: 0 !important;
+}
+
+.player[type="audio"][state="loading"] .watermark,
+.player[type="audio"][state="paused"] .watermark {
+  display: block;
+  margin: 0 !important;
+  margin-bottom: 54px !important;
+}
+
+.player[type="audio"][state="loading"] .gradient,
+.player[type="audio"][state="paused"] .gradient {
+  display: block;
+  visibility: visible;
+}
+
+.player[type="audio"][state="paused"] .controls-play-pause {
+  display: block;
+  background-image: url("assets/paused.png");
+}
+
+.player[type="audio"][state="loading"] .controls-play-pause {
+  display: none;
+}
+
+.player[type="audio"][state="loading"] .controls-cur-time,
+.player[type="audio"][state="loading"] .controls-total-time {
+  display: none !important;
+}
+
+.player[type="audio"][state="paused"]:not(.seeking) .controls-cur-time,
+.player[type="audio"][state="paused"]:not(.seeking) .controls-total-time {
+  display: block;
+}
+
+.player[type="audio"][state="loading"] .controls,
+.player[type="audio"][state="paused"] .controls,
+.player[type="audio"][state="loading"]:not(.seeking) .controls-progress,
+.player[type="audio"][state="paused"]:not(.seeking) .controls-progress {
+  display: block;
+}
+
+.player[type="audio"][state="loading"][live="true"] .controls-cur-time,
+.player[type="audio"][state="paused"][live="true"] .controls-cur-time,
+.player[type="audio"][state="loading"][live="true"] .controls-total-time,
+.player[type="audio"][state="paused"][live="true"] .controls-total-time,
+.player[type="audio"][state="loading"][live="true"] .controls-progress,
+.player[type="audio"][state="paused"][live="true"] .controls-progress {
+  display: none !important;
+}
+
+.player[type="audio"][state="loading"] .controls-progress-inner {
+  width: 90% !important;
+  -webkit-animation: loading 2s infinite linear;
+}
+
+.player[type="audio"][state="loading"] .media-artwork-wrapper,
+.player[type="audio"][state="paused"] .media-artwork-wrapper {
+  position: absolute;
+  left: 384px;
+  top: -450px;
+}
+
+/* ------------------------------------------------- */
+/* Player - Audio - Buffering/Playing                */
+/* ------------------------------------------------- */
+
+.player[type="audio"][state="buffering"] .overlay,
+.player[type="audio"][state="playing"] .overlay {
+  display: block;
+}
+
+.player[type="audio"][state="buffering"] .media-info,
+.player[type="audio"][state="playing"] .media-info {
+  display: block;
+  padding-bottom: 0;
+}
+
+.player[type="audio"][state="buffering"] .media-text,
+.player[type="audio"][state="playing"] .media-text {
+  float: left;
+  margin-top: 19px;
+}
+
+.player[type="audio"][state="buffering"] .controls,
+.player[type="audio"][state="playing"] .controls {
+  height: 4px;
+  position: absolute;
+  width: 384px;
+  bottom: auto;
+  left: auto;
+  right: auto;
+  top: auto;
+  display: block;
+}
+
+.player[type="audio"][state="buffering"] .controls-progress,
+.player[type="audio"][state="playing"] .controls-progress {
+  height: 4px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.player[type="audio"][state="buffering"] .controls-cur-time,
+.player[type="audio"][state="buffering"] .controls-total-time,
+.player[type="audio"][state="buffering"] .controls-play-pause,
+.player[type="audio"][state="playing"] .controls-cur-time,
+.player[type="audio"][state="playing"] .controls-total-time,
+.player[type="audio"][state="playing"] .controls-play-pause {
+  display: none;
+}
+
+.player[type="audio"][state="buffering"] .watermark,
+.player[type="audio"][state="playing"] .watermark {
+  display: none;
+  margin-bottom: 0;
+}
+
+.player[type="audio"][state="buffering"] .overlay,
+.player[type="audio"][state="playing"] .overlay {
+  margin-left: 384px;
+  margin-bottom: 116px;
+}
+
+/* ------------------------------------------------- */
+/* Player - Idle                                     */
+/* ------------------------------------------------- */
+
+.player[state="idle"] .intro,
+.player[state="idle"] .logo,
+.player[state="done"] .intro,
+.player[state="done"] .logo {
+    display: block;
+}
+.player[state="idle"] .intro-text,
+.player[state="done"] .intro-text {
+    display: inline-block;
+}
+
+
+.player[state="idle"] .overlay,
+.player[state="done"] .overlay{
+  display: none;
+}
+
+.player[state="idle"] .logo,
+.player[state="done"] .logo{
+  display: block;
+}
+
+.player[state="idle"] .spinner,
+.player[state="done"] .spinner{
+  display: none;
+}
+/*.player[state="idle"] .intro,*/
+/*.player[state="idle"] .logo {*/
+    /*display: block;*/
+/*}*/
+/*.player[state="idle"] .intro-text {*/
+    /*display: inline-block;*/
+/*}*/
+
+
+/*.player[state="idle"] .overlay {*/
+  /*display: none;*/
+/*}*/
+
+/*.player[state="idle"] .logo {*/
+  /*display: block;*/
+/*}*/
+
+/*.player[state="idle"] .spinner {*/
+  /*display: none;*/
+/*}*/
+
+/* ------------------------------------------------- */
+/* Player - Done                                     */
+/* ------------------------------------------------- */
+
+/*.player[state="done"] .overlay {*/
+  /*display: none;*/
+/*}*/
+
+/*.player[state="done"] {*/
+  /*background-image: url('assets/done.png');*/
+/*}*/
+
+/* ------------------------------------------------- */
+/* Player - Verifying                                */
+/* ------------------------------------------------- */
+.player[state="verifying"] .intro,
+.player[state="verifying"] .logo,
+.player[state="verified"] .intro,
+.player[state="verified"] .logo {
+    display: block;
+}
+.player[state="verifying"] .spinning-wheel {
+    display: block;
+}
+
+
+.player[state="verifying"] .verification-text,
+.player[state="verified"] .verification-text {
+    display: inline-block;
+}
+.player[state="verifying"] .verification-text::before{
+    content: "Verifying...";
+}
+.player[state="verified"] .verification-text::before {
+ content: "Sender Application Verified";
+}
+
+/* Playlist notification */
+
+.playlist-notification[toggle="on"] {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity .5s linear;
+}
+
+.playlist-notification {
+    background: rgba(0, 0, 0, .5);
+    width: 450px;
+    position: absolute;
+    right: 0;
+    bottom: 30%;
+    color: rgba(255, 255, 255, 0.8);
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 3s, opacity 3s linear;
+
+}
+
+#playlist-notification-text {
+    font-size: 30px;
+    border-bottom: 3px solid rgba(214, 214, 214, 0.25);
+    vertical-align: middle;
+    text-align: center;
+    padding: 5px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.playlist-notification-content {
+    vertical-align: middle;
+}
+
+#playlist-notification-thumbnail-frame {
+    vertical-align: middle;
+    display: inline-block;
+    width: 30%;
+    padding: 1%;
+    margin-right: 1%;
+}
+
+#playlist-notification-thumbnail {
+    vertical-align: middle;
+    display: inline-block;
+    width: 100%;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+#playlist-notification-title {
+    font-size: 20px;
+    width: 63%;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: justify;
+    margin-right: 2%;
+}
+
+/* recommendations*/
+.recommendations {
+    visibility: hidden;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: blue;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.anv-recommendation {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 2147483648;
+    color: white;
+}
+
+.anv-recommendation-content {
+    /*padding: 5% 5%;*/
+    background: #000;
+    padding: 0 5%;
+    width: 90%;
+    height: 100%;
+}
+
+.anv-recommendation-header {
+    /*background: #1817c0;*/
+    width: 100%;
+    height: 15%;
+}
+
+.anv-recommendation-title {
+    font-size: 3em;
+    white-space: nowrap;
+    width: 60%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    float: left;
+    margin: 3%;
+}
+
+.anv-recommendation-main {
+    position: relative;
+    /*background: #1817c0;*/
+    /*margin-top: 5%;*/
+    margin-bottom: 5%;
+    width: 100%;
+    height: 80%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.anv-recommendation-columns {
+    position: absolute;
+    height: 100%;
+    max-height: 100%;
+    /*background: #f817ff;*/
+}
+
+.anv-recommendation-column {
+    height: 100%;
+    /*background: #1718ff;*/
+    float: left;
+    /*padding: 5px;*/
+    /*margin: 1px;*/
+}
+
+.anv-recommendation-frame {
+    position: relative;
+    height: 45%;
+    width: 100%;
+    border-radius: 3px;
+    /*background: #7718ff;*/
+    /*padding: 5%;*/
+}
+
+.anv-recommendation-frame:hover {
+    /*background: #ee3f25;*/
+}
+
+.anv-no-touch .anv-recommendation-frame:hover .anv-recommendation-info {
+    display: block;
+
+}
+
+.anv-no-touch .anv-recommendation-info {
+    display: none;
+    background: rgba(0, 0, 0, .8);
+}
+
+.anv-recommendation-info {
+    position: absolute;
+    top: 0;
+    padding: 0 3%;
+    width: 94%;
+    /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='rgba(5, 4, 5, 0.82)', endColorstr='rgba(5, 4, 5, 0)'); *//* for IE */
+    /*background: -webkit-gradient(linear, left bottom, right bottom, from(rgba(5, 4, 5, 0.82)), to(rgba(5, 4, 5, 0))); *//* for webkit browsers */
+    /*background: -moz-linear-gradient(left,  rgba(5, 4, 5, 0.82),  rgba(5, 4, 5, 0)); *//* for firefox 3.6+ */
+    color: #fff;
+}
+
+.anv-recommendation-info-title {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 2em;
+    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+
+}
+
+.anv-recommendation-info-desc {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 1.5em;
+    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+}
+
+.anv-recommendation-info-timer {
+    font-size: 1.3em;
+    color: orangered;
+}
+
+.anv-recommendation-item {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 10px;
+    margin: auto;
+    height: 95%;
+    width: 95%;
+
+}
+
+.anv-recommendation-thumbnail {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.anv-recommendation-share {
+    float: right;
+    /*background: url("img/sprite32.png") -382px 0;*/
+    width: 32px;
+    height: 32px;
+    margin: 3%;
+}
+
+.anv-no-touch .anv-recommendation-share:hover {
+    background-position: -382px -32px;
+}
+
+.anv-recommendation-replay {
+    float: right;
+    /*background: url("img/sprite32.png") -415px 0;*/
+    width: 32px;
+    height: 32px;
+    margin: 3% 0;
+
+}
+
+.anv-no-touch .anv-recommendation-replay:hover {
+    background-position: -415px -32px;
+}
+
+
+/* Debug panel */
+
+#debug-panel {
+    display: none;
+    background: rgba(0,0,0,.8);
+    position: absolute;
+    padding: 30px;
+    color: #ffff00;
+    font-size: 2em;
+    font-family: courier, monospace;
+}
+#debug-panel ul {
+    list-style: none;
+    margin: 5px 0;
+}
+.anv-debug-key {
+    font-weight: bold;
+    padding-right: 15px;
+}
+
